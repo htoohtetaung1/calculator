@@ -31,6 +31,18 @@ numButtons.forEach(numButton => {
     numButton.addEventListener('click',e => {
         showInTextBox(numButton)
     })
-})  
+})
+
+let backBtn = document.querySelector('.back')
+backBtn.addEventListener('click',e => {
+    let currentText = textBox.textContent
+    let textArray = currentText.split('')
+    textArray.pop()
+    console.log(textArray)
+    let newText = textArray.join('')
+    console.log(newText)
+    textBox.textContent = newText
+}
+)
 
 
