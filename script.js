@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 function add(a,b) {
     return a + b
 }
@@ -105,5 +106,7 @@ function operate(num1,operator,num2) {
     
 }
 
+=======
+>>>>>>> parent of ad1c570 (Add function to show number in textbox)
 =======
 >>>>>>> parent of ad1c570 (Add function to show number in textbox)
