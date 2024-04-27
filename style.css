@@ -59,12 +59,18 @@ main {
     width: 100%;
     border: #780000 3px solid;
     padding: 10px;
-    min-height: 59px;
+    min-height: 75px;
+    max-height: 75px;
     border-radius: 5px;
     font-size: 30px;
     text-align: right;
     background-color: #fdf0d5;
     font-weight: bold;
+}
+
+.prevDisplay {
+    font-size: 15px;
+    color: rgb(113, 113, 113);
 }
 
 .calcButton {

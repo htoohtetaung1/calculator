@@ -1,112 +1,105 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-function add(a,b) {
-    return a + b
-}
-function subtract(a,b) {
-    return a - b
-}
-function multiply(a,b) {
-    return a * b
-}
-function divide(a,b) {
-    return a / b
-}
+let operator = ''
+let preValue = ''
+let currValue = ''
 
-let num1 = '';
-let num2 = '';
-let operator = '';
-let displayValue = '';
-let textBox = document.querySelector(".textDisplay")
-textBox.textContent = '0'
-function showInTextBox(button) {
-    if (textBox.textContent.includes('.')) {
-        if (button.textContent == '.') {
-            return
-        }
-    }
-    if (textBox.textContent == '0') {
-        if(button.textContent == '.') {
-            
-        }else {
-            textBox.textContent = ''
-        }
-    }
-    textBox.textContent += button.textContent
-    displayValue = parseFloat(textBox.textContent);
-    
-}
+let clear = document.querySelector(".clear")
+let back = document.querySelector(".back")
 
-//number button display function
-let numButtons = document.querySelectorAll(".num") 
-numButtons.forEach(numButton => {
-    numButton.addEventListener('click',e => {
-        showInTextBox(numButton)
+let numbers = document.querySelectorAll(".num")
+let operators = document.querySelectorAll(".operator")
+
+let decimal = document.querySelector(".point")
+let equal = document.querySelector(".equal")
+let prevDisplay = document.querySelector(".prevDisplay")
+let currDisplay = document.querySelector(".currDisplay")
+
+numbers.forEach(number => {
+    number.addEventListener("click",(e) => {
+        handleNumber((e.target.textContent))
+        currDisplay.textContent = currValue
     })
 })
 
+operators.forEach((op) => {
+    op.addEventListener("click",(e) => {
+        handleOperator((e.target.textContent))
+        prevDisplay.textContent = preValue + " " + operator
+        currDisplay.textContent = currValue
+    })
+})
 
-//back button function
-let backBtn = document.querySelector('.back')
-backBtn.addEventListener('click',e => {
-    let currentText = textBox.textContent
-    let newText = currentText.slice(0,-1)
-    if(!newText[0]) {
-        newText = '0';
-    }
-    console.log(newText)
-    textBox.textContent = newText
-    displayValue = parseFloat(textBox.textContent);
-}
-)
-
-// clear button function
-let clearBtn = document.querySelector('.clear')
-clearBtn.addEventListener('click',e => {
-    textBox.textContent = '0'
-    num1 = ''
-    num2 = ''
+clear.addEventListener("click",(e) => {
+    preValue = ''
+    currValue = ''
     operator = ''
-    displayValue = parseFloat(textBox.textContent);
+    prevDisplay.textContent = currValue
+    currDisplay.textContent = currValue
 })
 
-//operator buttons function
-let operators = document.querySelectorAll('.operator')
-operators.forEach(operatorBtn=> {
-    operatorBtn.addEventListener('click',e => {
-        
-    })
+equal.addEventListener("click",(e)=> {
+    if (preValue != '' && currValue != '') {
+        calculate();
+        prevDisplay.textContent = '';
+        currDisplay.textContent = preValue;
+        if (preValue == Infinity) {
+            currDisplay.textContent = "Cheeky Bastard"
+        }
+    }
 })
 
-//equal button function
-let equalBtn = document.querySelector('.equal')
-equalBtn.addEventListener('click',e => {
-    if (num1 == '') {
-        return;
-    }
-    
-
-
-    
-    console.log(num1)
+decimal.addEventListener('click',(e) => {
+    addDecimal();
 })
 
-function operate(num1,operator,num2) {
-    
-    if (num1 == '' || operator == '' || num2 == '') {
-        return
+back.addEventListener('click',(e) => {
+    currValue = currValue.slice(0,-1)
+    currDisplay.textContent = currValue
+})
+
+function handleNumber(num) {
+    if(currValue.length <= 10) {
+        currValue += num
     }
-    console.log(`${num1} ${operator} ${num2}`)
-    switch (operator) {
-        case '+': return add(num1,num2);
-        case '-': return subtract(num1,num2)
-        case '*': return multiply(num1,num2)
-        case '/': return divide(num1,num2)
-    }
-    
 }
 
-=======
->>>>>>> parent of ad1c570 (Add function to show number in textbox)
-=======
->>>>>>> parent of ad1c570 (Add function to show number in textbox)
+function handleOperator(op) {
+    operator = op;
+    preValue = currValue;
+    currValue = ''
+}
+
+function calculate() {
+    preValue = Number(preValue)
+    currValue = Number(currValue)
+    console.log(`${preValue} ${operator} ${currValue}`)
+    switch (operator) {
+        case '+':
+            preValue += currValue;
+            break;
+        case '-':
+            preValue -= currValue;
+            break;
+        case '*':
+            preValue *= currValue;
+            break;
+        case '/':
+            preValue /= currValue;
+            break;
+    } 
+    preValue = roundNumber(preValue)
+    console.log(preValue)
+    preValue = preValue.toString();
+    currValue = preValue;
+}
+
+function roundNumber(num) {
+    return Math.round(num * 1000) / 1000;
+}
+
+function addDecimal() {
+    if (!currValue.includes(".")) {
+        currValue += '.'
+    }
+}
+
+
